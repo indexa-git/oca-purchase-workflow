@@ -280,7 +280,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                 self.create_allocation(po_line, line, all_qty, alloc_uom)
             else:
                 po_line_data = self._prepare_purchase_order_line(purchase, item)
-                if item.keep_description:
+                if item.keep_description or po_line_data["name"] != item.name:
                     po_line_data["name"] = item.name
                 po_line = po_line_obj.create(po_line_data)
                 po_line_product_uom_qty = po_line.product_uom._compute_quantity(
